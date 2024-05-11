@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import backgroundImage from '../images/img2.jpg';
+
 
 const Login = () => {
   const [values, setValues] = useState({ username: '', password: '' });
@@ -37,37 +39,41 @@ const Login = () => {
         height: '100vh',
         backgroundColor: '#f8f9fa'
       }}>
+        
         <div style={{ width: '40%', padding: '5%', borderRadius: '5px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '4%' }}>
-            <h1>GLEAM CERAMIC COMPLEX</h1>
+          <div style={{ textAlign: 'center', marginBottom: '10%' }}>
+            <h1 style={{ color: '#41B3A3' }}>Welcome back !</h1>
+            <p style={{ color: 'blue' }}>Login to your account</p>
           </div>
-          <h2>Sign-In</h2>
           <form>
-            <div className="mb-3">
-              <label htmlFor="username"><strong>Username</strong></label>
-              <input
+            <div className="mb-3" style={{ marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input
                 type="text"
                 name="username"
+                placeholder='Enter your email address'
                 value={values.username}
                 onChange={handleChange}
                 className="form-control"
+                style={{ borderRadius: '15px', padding: '8px 20px' }}
               />
               {errors.username && <p>{errors.username}</p>}
             </div>
-            <div className="mb-3">
-              <label htmlFor="password"><strong>Password</strong></label>
-              <input
+            <div className="mb-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+               <input
                 type="password"
                 name="password"
+                placeholder='Enter your password'
                 value={values.password}
                 onChange={handleChange}
                 className="form-control"
+                style={{ borderRadius: '15px', padding: '8px 20px' }}
               />
               {errors.password && <p>{errors.password}</p>}
             </div>
-            <button type="submit" onClick={validateForm} className="btn btn-primary">Login</button>
-            <p>Don't have an account?</p>
-            <button type="button" className="btn btn-secondary">Sign Up</button>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5%' }}>
+              <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+              <button type="submit" onClick={validateForm} className="btn btn-primary" style={{ backgroundColor: '#41B3A3', marginTop: '5%', padding: '8px 20px',borderRadius: '15px', fontSize: '18px', color: 'white' }}>Login</button>
+            </div>
           </form>
         </div>
       </div>
