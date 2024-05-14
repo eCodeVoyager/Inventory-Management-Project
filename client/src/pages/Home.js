@@ -6,6 +6,8 @@ import Decorative_Item  from '../images/img5.jpeg';
 import Art_and_Events from '../images/img6.jpg';
 import Corporate_Gifts from '../images/img7.jpeg';
 import Table_Ware from '../images/img8.jpg';
+import Navbar from '../components/NavBar';
+
 
 const Home = () => {
   const images = [
@@ -18,6 +20,8 @@ const Home = () => {
   ];
 
   return (
+    <>
+    <Navbar />
     <div style={{display: 'flex', backgroundColor: '#41B3A3'}}>
       <div style={{width: '50%', padding: '10px'}}>
         <img src={image} alt="img9" style={{width: '100%', height: 'auto'}} />
@@ -30,7 +34,8 @@ const Home = () => {
         ))}
       </div>
     </div>
-
+    
+    </>
   );
 };
 

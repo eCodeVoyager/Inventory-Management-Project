@@ -1,7 +1,9 @@
 import React from 'react';
+import Navbar from '../components/NavBar';
 
 const AboutUs = () => {
   return (
+    <><Navbar />
     <div style={{
       backgroundColor: '#41B3A3',
       minHeight: '100vh',
@@ -27,6 +29,7 @@ const AboutUs = () => {
       <br></br>
       <h2>Crafting Tomorrow's Spaces Today - GLEAM CERAMIC COMPLEX, Shaping Excellence Since 2020.</h2>
     </div>
+    </>
   );
 };
 
