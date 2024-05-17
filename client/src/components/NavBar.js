@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ( {page}) => {
   const location = useLocation();
   const pathName = location.pathname;
 
@@ -16,8 +16,9 @@ const Navbar = () => {
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '30px', backgroundColor: '#C38D9E' }}>
       <div>
-        <h1>{pageNames[pathName]}</h1>
+        <h1 className='text-black'>{page}</h1>
       </div>
+      
       <div style={{ display: 'flex', gap: '20px' }}>
         <Link to="/home" style={{ color: 'white' }}>Home</Link>
         <Link to="/about-us" style={{ color: 'white' }}>About Us</Link>

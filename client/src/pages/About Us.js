@@ -3,7 +3,8 @@ import Navbar from '../components/NavBar';
 
 const AboutUs = () => {
   return (
-    <><Navbar />
+    <>
+    <Navbar page="ABOUT US" />
     <div style={{
       backgroundColor: '#41B3A3',
       minHeight: '100vh',
