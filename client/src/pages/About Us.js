@@ -1,10 +1,13 @@
 import React from 'react';
 import Navbar from '../components/NavBar';
+//import Sidebar from '../components/Sidebar';
 
 const AboutUs = () => {
   return (
     <>
+    
     <Navbar page="ABOUT US" />
+    
     <div style={{
       backgroundColor: '#41B3A3',
       minHeight: '100vh',
@@ -14,6 +17,7 @@ const AboutUs = () => {
       paddingLeft: '10%',
       paddingRight: '10%'
     }}>
+      
       <h2>Inspired Craftsmanship, Global Recognition</h2>
       <p>GLEAM CERAMIC COMPLEX, an industry leader in Sri Lanka since 2020, invites you to experience the essence of ceramic craftsmanship. Our global acclaim is a testament to our commitment to redefining industry standards through unparalleled quality and innovation.</p>
       <br></br>
