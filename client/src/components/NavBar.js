@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 const Navbar = ({ page }) => {
   const location = useLocation();
@@ -15,7 +16,7 @@ const Navbar = ({ page }) => {
   };
 
   return (
-    <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px', backgroundColor: '#C38D9E' }}>
+    <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', backgroundColor: '#C38D9E' }}>
       <div>
       <h2 className='text-white' style={{ color: 'white', marginLeft: '80px' }}>{page}</h2>
       </div>
@@ -26,6 +27,7 @@ const Navbar = ({ page }) => {
         <Link to="/our-collection" style={{ color: 'white' }}>Our Collection</Link>
         <Link to="/contact-us" style={{ color: 'white' }}>Contact Us</Link>
         <Link to="/login" style={{ color: 'white' }}>Login</Link>
+        <ShoppingCartIcon className="h-6 w-6 text-white" />
       </div>
     </nav>
   );
