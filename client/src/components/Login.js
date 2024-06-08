@@ -34,15 +34,15 @@ const Login = () => {
       backgroundPosition: 'center' 
     }}>
       <div style={{ 
-        width: '40%', 
-        padding: '5%', 
+        width: '400px',  
+        padding: '40px', 
         borderRadius: '5px', 
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-        backgroundColor: 'rgba(255, 255, 255, 0.8)'  // Transparent background color
+        backgroundColor: 'rgba(255, 255, 255, 0.7)'  
       }}>
         <div style={{ textAlign: 'center', marginBottom: '10%' }}>
-          <h1 style={{ color: '#41B3A3' }}>Welcome back!</h1>
-          <p style={{ color: 'blue' }}>Login to your account</p>
+          <h1 style={{ color: 'black', fontSize: '36px' }}>Welcome back!</h1>
+          <p style={{ color: 'blue', fontSize: '20px' }}>Login to your account</p>
         </div>
         <form onSubmit={validateForm}>
           <div className="mb-3" style={{ marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -53,7 +53,11 @@ const Login = () => {
               value={values.username}
               onChange={handleChange}
               className="form-control"
-              style={{ borderRadius: '15px', padding: '8px 20px' }}
+              style={{ 
+                borderRadius: '15px', 
+                padding: ' 10px', 
+                border: '1px solid black'  
+              }}
             />
             {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
           </div>
@@ -65,13 +69,28 @@ const Login = () => {
               value={values.password}
               onChange={handleChange}
               className="form-control"
-              style={{ borderRadius: '15px', padding: '8px 20px' }}
+              style={{ 
+                borderRadius: '15px', 
+                padding: '10px', 
+                fontSize: '16px',
+                border: '1px solid black'  
+              }}
             />
             {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5%' }}>
-            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-            <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#41B3A3', marginTop: '5%', padding: '8px 20px', borderRadius: '15px', fontSize: '18px', color: 'white' }}>Login</button>
+            <p style={{ color: 'blue' }}>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+            <button 
+            type="submit" 
+            className="btn btn-primary" 
+            style={{ 
+              backgroundColor: '#03045e', 
+              marginTop: '5%', 
+              padding: '8px 20px', 
+              borderRadius: '15px', 
+              fontSize: '18px', 
+              color: 'white' }}
+              >Login</button>
           </div>
         </form>
       </div>

@@ -1,45 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Link } from 'react-router-dom';
-import NavBarDash from '../components/NavBarDash';  // Import the NavBarDash component
+import NavBarDash from '../components/NavBarDash';
 
 const Order = () => {
-  const orders = [
-    { id: 1, itemName: 'Item A', quantity: 2, unitPrice: 10 },
-    { id: 2, itemName: 'Item B', quantity: 1, unitPrice: 20 },
-    { id: 3, itemName: 'Item C', quantity: 5, unitPrice: 5 },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [summary, setSummary] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    completedOrders: 0,
+    totalCustomers: 0,
+  });
 
   const calculateTotalPrice = (quantity, unitPrice) => quantity * unitPrice;
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/orders');
+        const data = await response.json();
+        setOrders(data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    const fetchSummary = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/orders/summary');
+        const data = await response.json();
+        setSummary(data);
+      } catch (error) {
+        console.error('Error fetching summary:', error);
+      }
+    };
+
+    fetchOrders();
+    fetchSummary();
+  }, []);
+
   return (
     <div className="h-screen flex flex-col">
-      {/* Add NavBarDash at the top */}
-      <NavBarDash page="Order"/>
-      
+      <NavBarDash page="Order" />
       <div className="flex flex-grow">
-        <div className="w-1/8">
+        <div className="w-1/6">
           <Sidebar />
         </div>
-        <div className="w-7/8 container mx-auto p-4">
-          {/* Add Order Button */}
-          <div className="flex justify-end mb-4">
-          <Link to="/createneworder">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
-                Create New Order
-              </button>
+        <div className="col-span-7 container mx-auto p-4">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-lg font-bold">Customer Summary</h2>
+            <Link to="/addnewcustomer">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
+             Create Orders
+            </button>
             </Link>
           </div>
-          
-          {/* Cards */}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="bg-white shadow-lg rounded-lg p-4">
               <h2 className="text-lg font-bold mb-2">Orders</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between mb-1">
-                  <p>100</p>
-                  <p>50</p>
-                  <p>50</p>
+                  <p>{summary.totalOrders}</p>
+                  <p>{summary.pendingOrders}</p>
+                  <p>{summary.completedOrders}</p>
                 </div>
                 <div className="flex justify-between text-gray-600 text-sm">
                   <p>All Orders</p>
@@ -67,7 +91,7 @@ const Order = () => {
               <h2 className="text-lg font-bold mb-2">Customers</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between mb-1">
-                  <p>300</p>
+                  <p>{summary.totalCustomers}</p>
                 </div>
                 <div className="flex justify-between text-gray-600 text-sm">
                   <p>Total Customers</p>
@@ -76,7 +100,6 @@ const Order = () => {
             </div>
           </div>
 
-          {/* Table */}
           <div className="bg-white shadow-lg rounded-lg p-4">
             <table className="min-w-full bg-white">
               <thead>
@@ -90,12 +113,12 @@ const Order = () => {
               </thead>
               <tbody className="text-center">
                 {orders.map((order) => (
-                  <tr key={order.id}>
-                    <td className="py-2 px-4 border-b">{order.id}</td>
-                    <td className="py-2 px-4 border-b">{order.itemName}</td>
+                  <tr key={order.order_id}>
+                    <td className="py-2 px-4 border-b">{order.order_id}</td>
+                    <td className="py-2 px-4 border-b">{order.product_name}</td>
                     <td className="py-2 px-4 border-b">{order.quantity}</td>
-                    <td className="py-2 px-4 border-b">${order.unitPrice}</td>
-                    <td className="py-2 px-4 border-b">${calculateTotalPrice(order.quantity, order.unitPrice)}</td>
+                    <td className="py-2 px-4 border-b">${order.unit_price}</td>
+                    <td className="py-2 px-4 border-b">${calculateTotalPrice(order.quantity, order.unit_price)}</td>
                   </tr>
                 ))}
               </tbody>

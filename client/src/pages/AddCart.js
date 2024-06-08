@@ -16,10 +16,10 @@ const CartItem = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white shadow-lg mt-10">
-            <h1 className="text-2xl font-bold text-center mb-6">My Shopping Cart (1 Items)</h1>
+            <h1 className="text-2xl font-bold text-center mb-6">My Shopping Cart </h1>
             <table className="table-auto w-full mb-6">
                 <thead>
-                    <tr className="bg-gray-100">
+                    <tr className="bg-gray-300">
                         <th className="px-4 py-2">Product</th>
                         <th className="px-4 py-2">Price</th>
                         <th className="px-4 py-2">Quantity</th>
@@ -31,11 +31,11 @@ const CartItem = () => {
                         <td className="border px-4 py-2 flex items-center">
                             <img
                                 src="https://via.placeholder.com/80"
-                                alt="Amani Long Sleeve Printed Shirt"
+                                alt="Latest Ceramic Products"
                                 className="w-20 h-auto mr-4"
                             />
                             <div>
-                                <p>Amani Long Sleeve Printed Shirt</p>
+                                <p>Latest Ceramic Products</p>
                                 <p>Size: M</p>
                             </div>
                         </td>
@@ -71,6 +71,7 @@ const CartItem = () => {
                 <span className="text-lg font-bold">Rs {(price * quantity).toFixed(2)}</span>
             </div>
             <button className="px-4 py-2 bg-black text-white">Back To Shop</button>
+            <button className="px-4 py-2 bg-green-500 text-white float-right">Place Orders</button>
         </div>
     );
 };

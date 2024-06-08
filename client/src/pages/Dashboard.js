@@ -122,24 +122,14 @@ const Dashboard = () => {
           </div>
 
           {/* Pie Chart Card and Other Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
-            <div className="bg-white shadow-lg rounded-lg p-4 col-span-1 md:col-span-2" style={{ height: '450px', width: '100%' }}>
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-4">
+            <div className="bg-white shadow-lg rounded-lg p-4 col-span-1 md:col-span-3" style={{ height: '500px', width: '100%' }}>
               <h2 className="text-lg font-bold mb-2">Marketing</h2>
               <Pie data={pieData} options={pieOptions} />
             </div>
-            <div className="col-span-1 md:col-span-3 flex flex-col gap-4">
-              <div className="bg-gray-200 shadow-lg rounded-lg p-4" style={{ height: '218px', width: '350px' }}>
-                {/* Content for the first card */}
-              </div>
-              <div className="bg-gray-200 shadow-lg rounded-lg p-4" style={{ height: '218px', width: '350px' }}>
-                {/* Content for the second card */}
-              </div>
-            </div>
-          </div>
 
-          {/* Summary Report */}
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full">
+            {/* Summary Report */}
+            <div className="col-span-1 md:col-span-3 bg-gray-200 p-6 rounded-lg shadow-lg">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Summary</h2>
                 <div className="flex space-x-4">
@@ -151,7 +141,7 @@ const Dashboard = () => {
                       </svg>
                     </button>
                   </div>
-                  <div className="relative inline-block text-left">
+                  <div className="relative inline-block text-right">
                     <button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
                       Last 7 Days
                       <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -176,7 +166,7 @@ const Dashboard = () => {
                   <option value="Sun">Sunday</option>
                 </select>
               </div>
-              <div className="relative" style={{ height: '300px' }}>
+              <div className="relative" style={{ height: '300px', width: '100%' }}>
                 <Line data={summaryData} options={summaryOptions} />
               </div>
             </div>
