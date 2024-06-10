@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Link } from 'react-router-dom';
 import NavBarDash from '../components/NavBarDash';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -40,16 +41,16 @@ const Order = () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col ">
       <NavBarDash page="Order" />
       <div className="flex flex-grow">
         <div className="w-1/6">
           <Sidebar />
         </div>
-        <div className="col-span-7 container mx-auto p-4">
-          <div className="flex justify-between mb-4">
+        <div className="col-span-7 container mx-auto p-4 ml-0" style={{ backgroundColor: '#E6F0DC' }}>
+          <div className="flex justify-between mb-4 ml-2">
             <h2 className="text-lg font-bold">Customer Summary</h2>
-            <Link to="/addnewcustomer">
+            <Link to="/createneworder">
             <button className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
              Create Orders
             </button>
@@ -72,7 +73,7 @@ const Order = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-4">
+            {/* <div className="bg-white shadow-lg rounded-lg p-4">
               <h2 className="text-lg font-bold mb-2">Issues</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between mb-1">
@@ -86,7 +87,7 @@ const Order = () => {
                   <p>Damaged</p>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="bg-white shadow-lg rounded-lg p-4">
               <h2 className="text-lg font-bold mb-2">Customers</h2>
               <div className="flex flex-col">
@@ -96,6 +97,19 @@ const Order = () => {
                 <div className="flex justify-between text-gray-600 text-sm">
                   <p>Total Customers</p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between mb-4">
+            <div className="relative w-48">
+              <input 
+                type="text" 
+                placeholder="Search Order" 
+                className="border rounded py-2 pl-10 pr-4 w-full"
+              />
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                < MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
             </div>
           </div>

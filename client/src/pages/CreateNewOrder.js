@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const CreateOrder = () => {
   const [orderId, setOrderId] = useState('');
@@ -28,6 +29,7 @@ const CreateOrder = () => {
       });
 
       if (response.ok) {
+        Swal.fire("SweetAlert2 is working!"); // Show SweetAlert2 popup on success
         console.log('Order submitted successfully');
         // Reset form fields after successful submission
         setOrderId('');
@@ -59,7 +61,7 @@ const CreateOrder = () => {
             />
           </div> */}
           <div className="mb-4">
-            <label htmlFor="customerId" className="block mb-1">Customer ID</label> {/* Added Customer ID field */}
+            <label htmlFor="customerId" className="block mb-1">Customer ID</label> 
             <input
               type="text"
               id="customerId"

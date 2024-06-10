@@ -19,6 +19,9 @@ import CreateNewOrder from "./pages/CreateNewOrder";
 import AddNewCustomer from "./pages/AddNewCustomer";
 import AddCart from "./pages/AddCart";
 import SubCategory from "./subCategories/SubCategory";
+import ProfilePage from "./pages/ProfilePage";
+import Supplier from "./pages/Supplier";
+import AddNewSupplier from "./pages/AddNewSupplier";
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SubProducts from "./subCategories/SubProducts";
@@ -47,7 +50,10 @@ function App() {
         <Route path="/addrawmaterial" element={<AddRawMaterial />} />
         <Route path="/createneworder" element={<CreateNewOrder />} />
         <Route path="/addnewcustomer" element={<AddNewCustomer />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/addcart" element={<AddCart />} />
+        <Route path="/supplier" element={<Supplier />} />
+        <Route path="/addnewsupplier" element={<AddNewSupplier />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="*" element={<Navigate to="/home" />} />
         <Route path="/subcategory/:id" element={<SubCategory/>} />

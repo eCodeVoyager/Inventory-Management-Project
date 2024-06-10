@@ -23,7 +23,7 @@ const OurCollection = () => {
   return (
     <>
       <Navbar page="OUR COLLECTION" />
-      <div style={{ backgroundColor: '#41B3A3', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px' }}>
+      <div style={{ backgroundColor: '#E6F0DC', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px' }}>
         {images.map((image, index) => (
           <div key={index} onClick={() => navigate(image.route)} style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', textAlign: 'center' }}>
             <img src={image.src} alt={image.name} style={{ width: '100%', height: 'auto' }} />

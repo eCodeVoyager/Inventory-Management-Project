@@ -78,7 +78,7 @@ const Dashboard = () => {
         <div className="col-span-1">
           <Sidebar />
         </div>
-        <div className="col-span-7 container mx-auto p-4">
+        <div className="col-span-7 container mx-auto p-4" style={{ backgroundColor: '#E6F0DC' }}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="bg-white shadow-lg rounded-lg p-4">
               <h2 className="text-lg font-bold mb-2">Total Inventory</h2>

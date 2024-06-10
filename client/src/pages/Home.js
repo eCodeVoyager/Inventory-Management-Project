@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <Navbar page="GLEAM CERAMIC COMPLEX" />
-      <div style={{display: 'flex', backgroundColor: '#41B3A3', alignItems: 'flex-start'}}>
+      <div style={{display: 'flex', backgroundColor: '#E6F0DC', alignItems: 'flex-start'}}>
         <div style={{width: '50%', padding: '10px', paddingLeft:'30px',paddingTop:'30PX'}}>
           <img src={image} alt="img9" style={{width: '80%', height: '50%'}} />
         </div>

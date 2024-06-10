@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import backgroundImage from '../images/img12.jpg'; 
+import backgroundImage from '../images/img14.jpg'; 
 import { Link } from 'react-router-dom';
 
 const Signup = () => {

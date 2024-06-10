@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Cog8ToothIcon,
-  ArrowRightStartOnRectangleIcon,
+  BuildingStorefrontIcon,
+  ArrowRightOnRectangleIcon,
   Squares2X2Icon,
   ArchiveBoxIcon,
   BuildingLibraryIcon,
   UsersIcon,
+  UserPlusIcon
 } from '@heroicons/react/24/solid';
-
 
 const Sidebar = () => {
   const [showSubset, setShowSubset] = useState(() => {
@@ -19,104 +19,93 @@ const Sidebar = () => {
   const toggleSubset = () => {
     setShowSubset((prev) => {
       const newState = !prev;
-      localStorage.setItem('showSubset', newState); 
+      localStorage.setItem('showSubset', newState);
       return newState;
     });
   };
 
-  const [activeBar, setActiveBar] = useState('booking');
+  const [activeBar, setActiveBar] = useState('dashboard');
   const location = useLocation();
 
   useEffect(() => {
-    const currentPath = location.pathname.split('/')[2];
+    const currentPath = location.pathname.split('/')[1];
     setActiveBar(currentPath);
   }, [location]);
 
   return (
-    
     <div>
-      <div className="fixed top-0 left-0 w-[200px] border-2 border-l-gray-400 bg-[#41B3A3] h-screen">
-        <div className="font-inter text-text-primary p-4 mb-8">
+      <div className="fixed top-0 left-0 w-[200px] border-2 border-l-gray-400 bg-blue-900 h-screen">
+        <div className="font-inter text-white p-4 mb-8">
           <p className="flex font-bold text-xl justify-center">GLEAM CERAMIC </p>
           <p className="flex font-bold text-xl justify-center">COMPLEX</p>
         </div>
-        
 
-        <div className="font-inter text-text-primary">
+        <div className="font-inter text-white">
           <Link to='/dashboard'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'booking' ? 'text-white bg-text-primary':''}`} 
-            onClick={() => setActiveBar('booking')}>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'dashboard' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('dashboard')}>
               <Squares2X2Icon className='h-6 w-6'/>
               <p className='flex items-center'>Dashboard</p>
             </div>
           </Link>
 
           <Link to='/orders'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'orders' ? 'text-white bg-text-primary' : ''} 
-            ${showSubset ? 'border border-gray-300 font-bold' : ''}`} 
-            onClick={() => {
-              setActiveBar('orders');
-              toggleSubset();
-            }}>
-              <ArchiveBoxIcon className='h-6 w-6 '/>
-              <p className='flex items-center font-normal'>Orders</p>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'orders' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('orders')}>
+              <ArchiveBoxIcon className='h-6 w-6'/>
+              <p className='flex items-center'>Orders</p>
             </div>
           </Link>
-          
+
           <Link to='/inventory'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'mechanics' ? 'text-white bg-text-primary':''}`} 
-            onClick={() => setActiveBar('mechanics')}>
-              <BuildingLibraryIcon className='h-6 w-6 '/>
-              <p>Inventory</p>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'inventory' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('inventory')}>
+              <BuildingLibraryIcon className='h-6 w-6'/>
+              <p className='flex items-center'>Inventory</p>
             </div>
           </Link>
 
           <Link to='/rawmaterials'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'orders' ? 'text-white bg-text-primary' : ''} 
-            ${showSubset ? 'border border-gray-300 font-bold' : ''}`} 
-            onClick={() => {
-              setActiveBar('orders');
-              toggleSubset();
-            }}>
-              <BuildingLibraryIcon className='h-6 w-6 '/>
-              <p className='flex items-center font-normal'>Raw Materials</p>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'rawmaterials' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('rawmaterials')}>
+              <BuildingStorefrontIcon className='h-6 w-6'/>
+              <p className='flex items-center'>Raw Materials</p>
             </div>
           </Link>
 
           <Link to='/customers'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'stock' ? 'text-white bg-text-primary':''}`} 
-            onClick={() => setActiveBar('stock')}>
-              <UsersIcon className='h-6 w-6 '/>
-              <p>Customers</p>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'customers' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('customers')}>
+              <UsersIcon className='h-6 w-6'/>
+              <p className='flex items-center'>Customers</p>
             </div>
           </Link>
 
-          <Link to='/settings'>
-            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer 
-            ${activeBar === 'setting' ? 'text-white bg-text-primary':''}`} 
-            onClick={() => setActiveBar('setting')}>
-              <Cog8ToothIcon className='h-6 w-6'/>
-              <p className='flex items-center'>Settings</p>
+          <Link to='/supplier'>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'supplier' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('supplier')}>
+              <UserPlusIcon className='h-6 w-6'/>
+              <p className='flex items-center'>Supplier</p>
             </div>
           </Link>
         </div>
 
-        <div className="font-inter text-text-primary w-[180px]">
-          <Link to='/'>
-            <div className='fixed flex pl-7 w-[180px] gap-1 hover:text-white hover:bg-blue-900 rounded-lg p-2 cursor-pointer bottom-10'>
-              <ArrowRightStartOnRectangleIcon className='h-6 w-6 '/>
-              <p>Log out</p>                    
+        <div className="font-inter text-white w-[180px]">
+          <Link to='/login'>
+            <div className='fixed flex pl-7 w-[180px] gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer bottom-10'>
+              <ArrowRightOnRectangleIcon className='h-6 w-6'/>
+              <p>Log out</p>
             </div>
           </Link>
         </div>
       </div>
     </div>
-    
   );
 };
 
