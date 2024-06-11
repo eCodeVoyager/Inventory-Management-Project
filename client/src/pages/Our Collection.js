@@ -1,33 +1,57 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import img3 from '../images/img3.jpg';
-import img4 from '../images/img4.jpg';
-import img5 from '../images/img5.jpeg';
-import img6 from '../images/img6.jpg';
-import img7 from '../images/img7.jpeg';
-import img8 from '../images/img8.jpg';
+import { Link } from 'react-router-dom';
+import Table_Ware from '../images/img16.jpg';
+import Mugs_and_Cups from '../images/img18.jpg';
+import Decorative_Item from '../images/img17.jpg';
+import Burners_and_Lamps from '../images/img11.jpg';
+import Corporate_Gifts from '../images/img7.jpeg';
+import Other from '../images/img8.jpg';
+
 import Navbar from '../components/NavBar';
 
 const OurCollection = () => {
-  const navigate = useNavigate(); 
-
   const images = [
-    { src: img3, name: 'kitchen Items', route: '/page1' },
-    { src: img4, name: 'Mugs and Cups', route: '/page2' },
-    { src: img5, name: 'Decorative Items', route: '/page3' },
-    { src: img6, name: 'Art and Events', route: '/page4' },
-    { src: img7, name: 'Corporate Gifts', route: '/page5' },
-    { src: img8, name: 'Table Ware', route: '/page6' },
+    { name: 'Table ware', url: Table_Ware, category_id: 1 },
+    { name: 'Mugs and Cups', url: Mugs_and_Cups, category_id: 2 },
+    { name: 'Decorative Items', url: Decorative_Item, category_id: 3 },
+    { name: 'Burners and Lamps', url: Burners_and_Lamps, category_id: 4 },
+    { name: 'Corporate Gifts', url: Corporate_Gifts, category_id: 5 },
+    { name: 'Other', url: Other, category_id: 6 },
   ];
 
   return (
     <>
       <Navbar page="OUR COLLECTION" />
-      <div style={{ backgroundColor: '#E6F0DC', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px' }}>
+      <div style={{
+        width: '100%',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        padding: '10px',
+        backgroundColor: '#E6F0DC' 
+      }}>
         {images.map((image, index) => (
-          <div key={index} onClick={() => navigate(image.route)} style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', textAlign: 'center' }}>
-            <img src={image.src} alt={image.name} style={{ width: '100%', height: 'auto' }} />
-            <p>{image.name}</p>
+          <div key={index} style={{
+            width: '30%',
+            padding: '10px',
+            paddingTop: '10px',
+            boxSizing: 'border-box'
+          }}>
+            <Link to={`/subcategory/${image.category_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <img 
+                src={image.url} 
+                alt={image.name} 
+                style={{
+                  width: '100%',
+                  height: '80%'
+                }}
+              />
+              <p style={{
+                textAlign: 'center',
+                marginTop: '10px',
+                fontWeight: 'bold'
+              }}>{image.name}</p>
+            </Link>
           </div>
         ))}
       </div>

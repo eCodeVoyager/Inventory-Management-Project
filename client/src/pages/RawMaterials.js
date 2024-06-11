@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 const RawMaterials = () => {
-  const [materials, setMaterials] = useState([
+  const [materials] = useState([
     { id: 1, name: 'Material A', quantity: 100, unitPrice: 10, inStock: true },
     { id: 2, name: 'Material B', quantity: 50, unitPrice: 20, inStock: true },
     { id: 3, name: 'Material C', quantity: 0, unitPrice: 30, inStock: false },
     // Add more mock data as needed
   ]);
   const [filter, setFilter] = useState('all');
-
-  const handleAddNewMaterial = () => {
-    // Logic for adding new material
-    alert('Add New Material button clicked!');
-  };
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
+  const navigate = useNavigate();
 
   const filteredMaterials = materials.filter((material) => {
     if (filter === 'inStock') return material.inStock;
@@ -27,6 +24,23 @@ const RawMaterials = () => {
   const totalMaterials = materials.length;
   const availableMaterials = materials.filter((material) => material.inStock).length;
   const lowStockMaterials = materials.filter((material) => material.quantity < 10);
+
+  const handleRowClick = (material) => {
+    setSelectedMaterial(material);
+  };
+
+  const handleUpdate = () => {
+    if (selectedMaterial) {
+      navigate('/updaterawmaterial', { state: { material: selectedMaterial } });
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedMaterial) {
+      // Logic for deleting material
+      alert(`Delete Material ${selectedMaterial.id}`);
+    }
+  };
 
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
@@ -91,7 +105,7 @@ const RawMaterials = () => {
           </div>
 
           <div className="flex justify-between mb-4">
-            <div className="relative w-48">
+            <div className="relative w-64">
               <input 
                 type="text" 
                 placeholder="Search Raw Materials" 
@@ -100,6 +114,22 @@ const RawMaterials = () => {
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 < MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
+            </div>
+            <div className="flex space-x-2">
+              <button 
+                onClick={handleUpdate}
+                disabled={!selectedMaterial}
+                className={`bg-yellow-500 text-white px-4 py-2 rounded shadow ${!selectedMaterial ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}
+              >
+                Update
+              </button>
+              <button 
+                onClick={handleDelete}
+                disabled={!selectedMaterial}
+                className={`bg-red-500 text-white px-4 py-2 rounded shadow ${!selectedMaterial ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
+              >
+                Delete
+              </button>
             </div>
           </div>
 
@@ -116,7 +146,11 @@ const RawMaterials = () => {
               </thead>
               <tbody className="text-center">
                 {filteredMaterials.map((material) => (
-                  <tr key={material.id}>
+                  <tr 
+                    key={material.id}
+                    className={`cursor-pointer ${selectedMaterial && selectedMaterial.id === material.id ? 'bg-gray-200' : ''}`}
+                    onClick={() => handleRowClick(material)}
+                  >
                     <td className="py-2 px-4 border-b">{material.id}</td>
                     <td className="py-2 px-4 border-b">{material.name}</td>
                     <td className="py-2 px-4 border-b">{material.quantity}</td>

@@ -22,6 +22,10 @@ import SubCategory from "./subCategories/SubCategory";
 import ProfilePage from "./pages/ProfilePage";
 import Supplier from "./pages/Supplier";
 import AddNewSupplier from "./pages/AddNewSupplier";
+import SingleProduct from "./subCategories/SingleProduct";
+import UpdateProduct from "./pages/UpdateProduct";
+import UpdateRawMaterials from './pages/UpdateRawmaterials';
+import UpdateSupplier from './pages/UpdateSupplier';
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SubProducts from "./subCategories/SubProducts";
@@ -54,10 +58,14 @@ function App() {
         <Route path="/addcart" element={<AddCart />} />
         <Route path="/supplier" element={<Supplier />} />
         <Route path="/addnewsupplier" element={<AddNewSupplier />} />
+        <Route path="/updateproduct" element={<UpdateProduct />} />
+        <Route path="/updaterawmaterial" element={<UpdateRawMaterials />} />
+        <Route path="/updatesupplier" element={<UpdateSupplier />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="*" element={<Navigate to="/home" />} />
         <Route path="/subcategory/:id" element={<SubCategory/>} />
         <Route path="/products/:id" element={<SubProducts/>} />
+        <Route path= "/singleproduct" element={<SingleProduct/>}/>
       </Routes>
     </Router>
   );

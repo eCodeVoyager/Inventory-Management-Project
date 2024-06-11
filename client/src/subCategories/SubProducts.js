@@ -1,5 +1,11 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import TeaSet01 from '../images/tea set 01.jpg';
+import TeaSet02 from '../images/tea set 02.jpg';
+import TeaSet03 from '../images/tea set 03.jpg';
+import TeaSet04 from '../images/tea set 04.jpg';
+import TeaSet05 from '../images/tea set 05.jpg';
+
 
 const SubProducts = () => {
     const {id} = useParams();
@@ -8,50 +14,45 @@ const SubProducts = () => {
     const products = [
         {
           id: 1,
-          name: 'Basic Tee',
+          name: 'Tea Set 01',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+          imageSrc: TeaSet01,
           imageAlt: "Front of men's Basic Tee in black.",
           price: '$35',
-          color: 'Black',
         },
         {
           id: 1,
-          name: 'Basic Teedfgbdgbdgbdg',
+          name: 'Tea Set 02',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+          imageSrc: TeaSet02,
           imageAlt: "Front of men's Basic Tee in black.",
           price: '$35',
-          color: 'Black',
         },
         {
           id: 1,
-          name: 'Basic Tee',
+          name: 'Tea Set 03',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+          imageSrc: TeaSet03,
           imageAlt: "Front of men's Basic Tee in black.",
           price: '$35',
-          color: 'Black',
         },
         {
           id: 1,
-          name: 'Basic Tee',
+          name: 'Tea Set 04',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+          imageSrc: TeaSet04,
           imageAlt: "Front of men's Basic Tee in black.",
           price: '$35',
-          color: 'Black',
         },
         {
           id: 1,
-          name: 'Basic Tee',
+          name: 'Tea Set 05',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+          imageSrc: TeaSet05,
           imageAlt: "Front of men's Basic Tee in black.",
           price: '$35',
-          color: 'Black',
         },
-        // More products...
+
       ]
 
   return (

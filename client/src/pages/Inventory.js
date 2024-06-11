@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import NavBarDash from '../components/NavBarDash'; // Import the NavBarDash component
+import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 const Inventory = () => {
@@ -13,12 +13,33 @@ const Inventory = () => {
   ];
 
   const [filter, setFilter] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const navigate = useNavigate();
+
   const totalProducts = products.length;
   const availableProducts = products.filter(product => product.inStock).length;
   const totalValue = products.reduce((acc, product) => acc + (product.quantity * product.unitPrice), 0);
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
+  };
+
+  const handleRowClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleUpdate = () => {
+    if (selectedProduct) {
+      // Navigate to the update page with the selected product's details
+      navigate('/updateproduct', { state: { product: selectedProduct } });
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedProduct) {
+      // Logic for deleting the product
+      alert(`Delete Product ${selectedProduct.id}`);
+    }
   };
 
   const filteredProducts = products.filter((product) => {
@@ -30,7 +51,7 @@ const Inventory = () => {
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
       <div className="row-span-1">
-        <NavBarDash page="Inventory" /> {/* Pass the page prop */}
+        <NavBarDash page="Inventory" />
       </div>
       <div className="grid grid-cols-8 row-span-1">
         <div className="col-span-1">
@@ -96,7 +117,7 @@ const Inventory = () => {
           </div>
 
           <div className="flex justify-between mb-2">
-            <div className="relative w-48">
+            <div className="relative w-64">
               <input 
                 type="text" 
                 placeholder="Search Products" 
@@ -105,6 +126,22 @@ const Inventory = () => {
               <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
+            </div>
+            <div className="flex space-x-2">
+              <button 
+                onClick={handleUpdate}
+                disabled={!selectedProduct}
+                className={`bg-yellow-500 text-white px-3 py-1 rounded shadow ${!selectedProduct ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}
+              >
+                Update
+              </button>
+              <button 
+                onClick={handleDelete}
+                disabled={!selectedProduct}
+                className={`bg-red-500 text-white px-3 py-1 rounded shadow ${!selectedProduct ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
+              >
+                Delete
+              </button>
             </div>
           </div>
 
@@ -121,7 +158,11 @@ const Inventory = () => {
               </thead>
               <tbody className="text-center">
                 {filteredProducts.map((product) => (
-                  <tr key={product.id}>
+                  <tr 
+                    key={product.id}
+                    className={`cursor-pointer ${selectedProduct && selectedProduct.id === product.id ? 'bg-gray-200' : ''}`}
+                    onClick={() => handleRowClick(product)}
+                  >
                     <td className="py-2 px-2 border-b">{product.id}</td>
                     <td className="py-2 px-2 border-b">{product.name}</td>
                     <td className="py-2 px-2 border-b">{product.quantity}</td>

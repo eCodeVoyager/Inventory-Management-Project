@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import { Link } from 'react-router-dom';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const Supplier = () => {
   const suppliers = [
-    { id: 1, name: 'Supplier One', email: 'supplier1@example.com', phone: '111-222-3333', active: true, new: true },
-    { id: 2, name: 'Supplier Two', email: 'supplier2@example.com', phone: '222-333-4444', active: true, new: false },
-    { id: 3, name: 'Supplier Three', email: 'supplier3@example.com', phone: '333-444-5555', active: false, new: false },
+    { id: 1, name: 'Supplier One', email: 'supplier1@example.com', phone: '111-222-3333', address: '123 Street', rawmaterial: 'Material A', active: true, new: true },
+    { id: 2, name: 'Supplier Two', email: 'supplier2@example.com', phone: '222-333-4444', address: '456 Avenue', rawmaterial: 'Material B', active: true, new: false },
+    { id: 3, name: 'Supplier Three', email: 'supplier3@example.com', phone: '333-444-5555', address: '789 Boulevard', rawmaterial: 'Material C', active: false, new: false },
     // Add more suppliers as needed
   ];
 
   const totalSuppliers = suppliers.length;
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
+  const navigate = useNavigate();
+
+  const handleRowClick = (supplier) => {
+    setSelectedSupplier(supplier);
+  };
+
+  const handleUpdate = () => {
+    if (selectedSupplier) {
+      navigate('/updatesupplier', { state: { supplier: selectedSupplier } });
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedSupplier) {
+      // Logic for deleting supplier
+      alert(`Delete Supplier ${selectedSupplier.id}`);
+    }
+  };
 
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
@@ -58,6 +77,22 @@ const Supplier = () => {
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
             </div>
+            <div className="flex space-x-2">
+              <button 
+                onClick={handleUpdate}
+                disabled={!selectedSupplier}
+                className={`bg-yellow-500 text-white px-4 py-2 rounded shadow ${!selectedSupplier ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}
+              >
+                Update
+              </button>
+              <button 
+                onClick={handleDelete}
+                disabled={!selectedSupplier}
+                className={`bg-red-500 text-white px-4 py-2 rounded shadow ${!selectedSupplier ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`}
+              >
+                Delete
+              </button>
+            </div>
           </div>
 
           <div className="bg-white shadow-lg rounded-lg p-4">
@@ -72,11 +107,15 @@ const Supplier = () => {
               </thead>
               <tbody className="text-center">
                 {suppliers.map((supplier) => (
-                  <tr key={supplier.id}>
+                  <tr 
+                    key={supplier.id}
+                    className={`cursor-pointer ${selectedSupplier && selectedSupplier.id === supplier.id ? 'bg-gray-200' : ''}`}
+                    onClick={() => handleRowClick(supplier)}
+                  >
                     <td className="py-2 px-4 border-b">{supplier.id}</td>
                     <td className="py-2 px-4 border-b">{supplier.name}</td>
                     <td className="py-2 px-4 border-b">{supplier.phone}</td>
-                    <td className="py-2 px-4 border-b">{supplier.raw_material}</td>
+                    <td className="py-2 px-4 border-b">{supplier.rawmaterial}</td>
                   </tr>
                 ))}
               </tbody>

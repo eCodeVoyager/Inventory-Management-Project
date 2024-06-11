@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { NavLink, useParams,Link } from 'react-router-dom';
+import TeaSet from '../images/Tea Set.jpg';
+import DessertSet from '../images/DessertPlates.jpg';
 
 const SubCategory = () => {
     const {id} = useParams();
@@ -12,23 +14,23 @@ const SubCategory = () => {
 
 
 
-    const subCategoryList = [
-        {name: 'Cups', url: 5},
-        {name: 'Mugs', url:6},
-    ]
+    // const subCategoryList = [
+    //     {name: 'Cups', url: 5},
+    //     {name: 'Mugs', url:6},
+    // ]
 
     const callouts = [
         {
-          name: 'Desk and Office',
+          name: 'Tea Sets',
           description: 'Work from home accessories',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg',
+          imageSrc: TeaSet,
           imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
           href: '#',
         },
         {
-          name: 'Self-Improvement',
+          name: 'Dessert Set',
           description: 'Journals and note-taking',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
+          imageSrc: DessertSet,
           imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
           href: '#',
         },
@@ -44,13 +46,13 @@ const SubCategory = () => {
   return (
     <div>
       
-    {  subCategoryList.map((subCategory, index) => (
+    {/* {  subCategoryList.map((subCategory, index) => (
         <div key={index}>
           <Link to={`/products/${subCategory.url}`} alt={subCategory.name} >
           <h1>{subCategory.name}</h1>
           </Link>
         </div>
-      ))}
+      ))} */}
 
 <div className="bg-gray-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
