@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const AddCustomerPage = () => {
   const [customerId, setCustomerId] = useState('');
@@ -8,17 +9,38 @@ const AddCustomerPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can add the logic to submit the customer data
-    console.log('Customer submitted:', { customerId, customerName, address, phone, email, password });
-    // Reset form fields after submission
-    setCustomerId('');
-    setCustomerName('');
-    setAddress('');
-    setPhone('');
-    setEmail('');
-    setPassword('');
+
+    if (!customerId || !customerName || !address || !phone || !email || !password) {
+      Swal.fire('All fields are required');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/customers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ customerId, customerName, address, phone, email, password }),
+      });
+
+      if (response.ok) {
+        Swal.fire('Success', 'Customer added successfully', 'success');
+        setCustomerId('');
+        setCustomerName('');
+        setAddress('');
+        setPhone('');
+        setEmail('');
+        setPassword('');
+      } else {
+        throw new Error('Failed to add customer');
+      }
+    } catch (error) {
+      console.error('Error adding customer:', error);
+      Swal.fire('Error', 'Error adding customer', 'error');
+    }
   };
 
   return (

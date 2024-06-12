@@ -92,14 +92,12 @@ const Inventory = () => {
               </div>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-2">
-              <h2 className="text-lg font-bold mb-1">Processing Products</h2>
+              <h2 className="text-lg font-bold mb-1">Low Stock Products</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between text-gray-600 text-sm">
-                  <p>Processing Products</p>
                   <p>Low Stock Alerts</p>
                 </div>
                 <div className="flex justify-between mb-1">
-                  <p>{totalProducts - availableProducts}</p>
                   <p>{products.filter(product => product.quantity < 5 && product.inStock).length}</p>
                 </div>
               </div>

@@ -8,13 +8,20 @@ const AddRawMaterialPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can add the logic to submit the raw material data
-    console.log('Raw material submitted:', { materialId, materialName, quantity, unitPrice });
-    // Reset form fields after submission
-    setMaterialId('');
-    setMaterialName('');
-    setQuantity('');
-    setUnitPrice('');
+    fetch('http://localhost:3000/rawmaterials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ materialId, materialName, quantity, unitPrice }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert('Raw material added successfully');
+        setMaterialId('');
+        setMaterialName('');
+        setQuantity('');
+        setUnitPrice('');
+      })
+      .catch(error => console.error('Error adding raw material:', error));
   };
 
   return (
@@ -24,19 +31,19 @@ const AddRawMaterialPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="materialId" className="block mb-1">Material ID</label>
-            <input type="text" id="materialId" value={materialId} onChange={(e) => setMaterialId(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="text" id="materialId" value={materialId} onChange={(e) => setMaterialId(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="mb-4">
             <label htmlFor="materialName" className="block mb-1">Material Name</label>
-            <input type="text" id="materialName" value={materialName} onChange={(e) => setMaterialName(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="text" id="materialName" value={materialName} onChange={(e) => setMaterialName(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="mb-4">
             <label htmlFor="quantity" className="block mb-1">Quantity</label>
-            <input type="text" id="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="number" id="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="mb-4">
             <label htmlFor="unitPrice" className="block mb-1">Unit Price</label>
-            <input type="text" id="unitPrice" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="number" id="unitPrice" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="flex justify-center">
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>

@@ -1,22 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
-const UpdateProductPage = () => {
-  const location = useLocation();
+const UpdateProductPage = ({ location }) => {
   const product = location.state.product;
-
   const [productId, setProductId] = useState(product.id);
   const [productName, setProductName] = useState(product.name);
   const [description, setDescription] = useState(product.description || '');
-  const [price, setPrice] = useState(product.unitPrice);
   const [quantity, setQuantity] = useState(product.quantity);
   const [unitPrice, setUnitPrice] = useState(product.unitPrice);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can add the logic to update the product data
-    console.log('Product updated:', { productId, productName, description, price, quantity, unitPrice });
-    // Reset form fields after submission
+    // Sending updated data to backend
+    fetch(`/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        productName,
+        description,
+        quantity,
+        unitPrice,
+      }),
+    })
+    .then(response => {
+      if (response.ok) {
+        Swal.fire("Success", "Product updated successfully!", "success");
+      } else {
+        Swal.fire("Error", "Failed to update product", "error");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      Swal.fire("Error", "An error occurred", "error");
+    });
+  };
+
+  const handleDelete = () => {
+    // Confirm deletion
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Sending delete request to backend
+        fetch(`/api/products/${productId}`, {
+          method: 'DELETE',
+        })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire("Deleted!", "Your product has been deleted.", "success");
+          } else {
+            Swal.fire("Error", "Failed to delete product", "error");
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire("Error", "An error occurred", "error");
+        });
+      }
+    });
   };
 
   return (

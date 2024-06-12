@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 const RawMaterials = () => {
-  const [materials] = useState([
-    { id: 1, name: 'Material A', quantity: 100, unitPrice: 10, inStock: true },
-    { id: 2, name: 'Material B', quantity: 50, unitPrice: 20, inStock: true },
-    { id: 3, name: 'Material C', quantity: 0, unitPrice: 30, inStock: false },
-    // Add more mock data as needed
-  ]);
+  const [materials, setMaterials] = useState([]);
   const [filter, setFilter] = useState('all');
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetch('http://localhost:3000/rawmaterials')
+      .then(response => response.json())
+      .then(data => setMaterials(data))
+      .catch(error => console.error('Error fetching raw materials:', error));
+  }, []);
+
   const filteredMaterials = materials.filter((material) => {
-    if (filter === 'inStock') return material.inStock;
-    if (filter === 'outOfStock') return !material.inStock;
+    if (filter === 'inStock') return material.quantity > 0;
+    if (filter === 'outOfStock') return material.quantity === 0;
     return true;
   }).filter((material) =>
     material.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalMaterials = materials.length;
-  const availableMaterials = materials.filter((material) => material.inStock).length;
-  const lowStockMaterials = materials.filter((material) => material.quantity < 10);
+  const availableMaterials = materials.filter((material) => material.quantity > 0).length;
+  const lowStockMaterials = materials.filter((material) => material.quantity < 5);
 
   const handleRowClick = (material) => {
     setSelectedMaterial(material);
@@ -40,8 +42,15 @@ const RawMaterials = () => {
 
   const handleDelete = () => {
     if (selectedMaterial) {
-      // Logic for deleting material
-      alert(`Delete Material ${selectedMaterial.id}`);
+      fetch(`http://localhost:3000/rawmaterials/${selectedMaterial.id}`, {
+        method: 'DELETE',
+      })
+        .then(() => {
+          setMaterials(materials.filter(material => material.id !== selectedMaterial.id));
+          setSelectedMaterial(null);
+          alert('Raw material deleted successfully');
+        })
+        .catch(error => console.error('Error deleting raw material:', error));
     }
   };
 
@@ -161,7 +170,7 @@ const RawMaterials = () => {
                     <td className="py-2 px-4 border-b">{material.quantity}</td>
                     <td className="py-2 px-4 border-b">${material.unitPrice}</td>
                     <td className="py-2 px-4 border-b">
-                      {material.inStock ? 'Yes' : 'No'}
+                      {material.quantity > 0 ? 'Yes' : 'No'}
                     </td>
                   </tr>
                 ))}

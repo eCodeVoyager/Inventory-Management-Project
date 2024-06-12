@@ -1,8 +1,15 @@
 import express from 'express';
-import { signUpCustomer } from '../controllers/customerController.js';
+import {
+  getAllCustomers,
+  getCustomerById,
+  addCustomer,
+  deleteCustomer,
+} from '../controllers/customerController.js';
 
 const router = express.Router();
 
-router.post('/signup', signUpCustomer);
+router.get('/', getAllCustomers);
+router.post('/', addCustomer);
+router.delete('/:id', deleteCustomer);
 
 export default router;

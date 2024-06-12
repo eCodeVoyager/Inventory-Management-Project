@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import { Link } from 'react-router-dom';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import Swal from 'sweetalert2';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -68,11 +69,11 @@ const Order = () => {
           order.order_id === orderId ? { ...order, status } : order
         )
       );
+      Swal.fire('Order status updated successfully');
     } catch (error) {
       console.error('Error updating order status:', error);
     }
   };
-
 
   return (
     <div className="h-screen flex flex-col">
@@ -150,7 +151,7 @@ const Order = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {orders.map((order) => (
+                {filteredOrders.map((order) => (
                   <tr key={order.order_id}>
                     <td className="py-2 px-4 border-b">{order.order_id}</td>
                     <td className="py-2 px-4 border-b">{order.customer_id}</td>

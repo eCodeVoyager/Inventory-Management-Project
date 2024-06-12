@@ -22,10 +22,17 @@ const UpdateRawMaterialPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can add the logic to update the raw material data
-    console.log('Raw material updated:', { materialId, materialName, quantity, unitPrice });
-    // Redirect back to the raw materials page or wherever you want
-    navigate('/rawmaterials');
+    fetch(`http://localhost:3000/rawmaterials/${materialId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ materialName, quantity, unitPrice }),
+    })
+      .then(response => response.json())
+      .then(() => {
+        alert('Raw material updated successfully');
+        navigate('/rawmaterials');
+      })
+      .catch(error => console.error('Error updating raw material:', error));
   };
 
   return (
@@ -39,15 +46,15 @@ const UpdateRawMaterialPage = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="materialName" className="block mb-1">Material Name</label>
-            <input type="text" id="materialName" value={materialName} onChange={(e) => setMaterialName(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="text" id="materialName" value={materialName} onChange={(e) => setMaterialName(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="mb-4">
             <label htmlFor="quantity" className="block mb-1">Quantity</label>
-            <input type="number" id="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="number" id="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="mb-4">
             <label htmlFor="unitPrice" className="block mb-1">Unit Price</label>
-            <input type="number" id="unitPrice" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+            <input type="number" id="unitPrice" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" required />
           </div>
           <div className="flex justify-center">
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Update</button>

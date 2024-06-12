@@ -1,47 +1,44 @@
-import pool from '../config/db.js';
+import { createConnection } from 'mysql2/promise';
+import dotenv from 'dotenv';
 
-const createOrder = async (orderData) => {
-    const connection = await pool.getConnection();
-    try {
-        await connection.beginTransaction();
-        
-        const [result] = await connection.query(
-            'INSERT INTO orders (order_id, customer_id, product_id, product_name, quantity, unit_price) VALUES (?, ?, ?, ?, ?, ?)',
-            [orderData.orderId, orderData.customerId, orderData.productId, orderData.productName, orderData.quantity, orderData.unitPrice]
-        );
-        
-        await connection.commit();
-        
-        return { id: result.insertId, ...orderData };
-    } catch (error) {
-        await connection.rollback();
-        throw error;
-    } finally {
-        connection.release();
-    }
+dotenv.config();
+
+const connectionConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
-const getOrders = async () => {
-    const [rows] = await pool.query(
-        'SELECT o.order_id, o.product_name, o.quantity, p.unit_price, (o.quantity * p.unit_price) AS total_price ' +
-        'FROM orders o ' +
-        'JOIN products p ON o.product_id = p.id'
-    );
-    return rows;
+const addOrder = async (order) => {
+  const connection = await createConnection(connectionConfig);
+  const { customerId, productId, productName, quantity, unitPrice } = order;
+
+  // Check stock quantity
+  const [stockRows] = await connection.query(
+    'SELECT quantity FROM stock WHERE product_id = ?',
+    [productId]
+  );
+  const stockQuantity = stockRows[0]?.quantity;
+
+  if (stockQuantity === undefined || stockQuantity < quantity) {
+    throw new Error('Insufficient stock');
+  }
+
+  await connection.query(
+    'INSERT INTO orders (customer_id, product_id, product_name, quantity, unit_price, status) VALUES (?, ?, ?, ?, ?, ?)',
+    [customerId, productId, productName, quantity, unitPrice, 'pending']
+  );
+
+  // Update stock quantity
+  await connection.query(
+    'UPDATE stock SET quantity = quantity - ? WHERE product_id = ?',
+    [quantity, productId]
+  );
+
+  await connection.end();
 };
 
-const getOrderStats = async () => {
-    const [orders] = await pool.query('SELECT COUNT(*) AS totalOrders FROM orders');
-    const [pendingOrders] = await pool.query('SELECT COUNT(*) AS pendingOrders FROM orders WHERE order_status = "pending"');
-    const [completedOrders] = await pool.query('SELECT COUNT(*) AS completedOrders FROM orders WHERE order_status = "completed"');
-    const [customers] = await pool.query('SELECT COUNT(*) AS totalCustomers FROM customers');
-    
-    return {
-        totalOrders: orders[0].totalOrders,
-        pendingOrders: pendingOrders[0].pendingOrders,
-        completedOrders: completedOrders[0].completedOrders,
-        totalCustomers: customers[0].totalCustomers
-    };
+export default {
+  addOrder,
 };
-
-export { createOrder, getOrders, getOrderStats };
