@@ -13,13 +13,16 @@ const RawMaterials = () => {
   ]);
   const [filter, setFilter] = useState('all');
   const [selectedMaterial, setSelectedMaterial] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const filteredMaterials = materials.filter((material) => {
     if (filter === 'inStock') return material.inStock;
     if (filter === 'outOfStock') return !material.inStock;
     return true;
-  });
+  }).filter((material) =>
+    material.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const totalMaterials = materials.length;
   const availableMaterials = materials.filter((material) => material.inStock).length;
@@ -110,9 +113,11 @@ const RawMaterials = () => {
                 type="text" 
                 placeholder="Search Raw Materials" 
                 className="border rounded py-2 pl-10 pr-4 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                < MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
             </div>
             <div className="flex space-x-2">

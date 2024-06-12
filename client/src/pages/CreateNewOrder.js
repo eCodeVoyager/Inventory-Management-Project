@@ -46,7 +46,7 @@ const CreateOrder = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-200">
+    <div className="flex justify-center items-center h-screen bg-[#E6F0DC]">
       <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Create New Order</h2>
         <form onSubmit={handleSubmit}>

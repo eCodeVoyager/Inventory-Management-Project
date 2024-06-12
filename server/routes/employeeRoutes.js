@@ -1,8 +1,9 @@
 import express from 'express';
-import { signUpEmployee } from '../controllers/employeeController.js';
+import { getEmployeeData } from '../controllers/employeeController.js';
 
 const router = express.Router();
 
-router.post('/signup', signUpEmployee);
+// Route to fetch employee data
+router.get('/', getEmployeeData);
 
 export default router;

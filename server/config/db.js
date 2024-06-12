@@ -11,3 +11,12 @@ const pool = mysql.createPool({
 });
 
 export default pool;
+
+export const executeQuery = async (query, values) => {
+    try {
+      const [rows] = await connection.execute(query, values);
+      return rows;
+    } catch (error) {
+      throw new Error('Error executing query');
+    }
+  };

@@ -20,7 +20,7 @@ const UpdateProductPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-200">
+    <div className="flex justify-center items-center h-screen bg-[#E6F0DC]">
       <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Update Product</h2>
         <form onSubmit={handleSubmit}>
@@ -35,10 +35,6 @@ const UpdateProductPage = () => {
           <div className="mb-4">
             <label htmlFor="description" className="block mb-1">Description</label>
             <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="price" className="block mb-1">Price</label>
-            <input type="text" id="price" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
           </div>
           <div className="mb-4">
             <label htmlFor="quantity" className="block mb-1">Quantity</label>

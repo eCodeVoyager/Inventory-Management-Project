@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 const Inventory = () => {
-  const products = [
-    { id: 1, name: 'Product A', quantity: 10, unitPrice: 20, inStock: true },
-    { id: 2, name: 'Product B', quantity: 5, unitPrice: 15, inStock: false },
-    { id: 3, name: 'Product C', quantity: 15, unitPrice: 25, inStock: true },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch products from backend
+    fetch('/api/products')
+    .then(response => response.json())
+    .then(data => {
+      setProducts(data.products);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }, []);
 
   const [filter, setFilter] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const totalProducts = products.length;
@@ -46,12 +54,14 @@ const Inventory = () => {
     if (filter === 'instock') return product.inStock;
     if (filter === 'outofstock') return !product.inStock;
     return true;
-  });
+  }).filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
       <div className="row-span-1">
-        <NavBarDash page="Inventory" />
+        <NavBarDash page="Products" />
       </div>
       <div className="grid grid-cols-8 row-span-1">
         <div className="col-span-1">
@@ -122,6 +132,8 @@ const Inventory = () => {
                 type="text" 
                 placeholder="Search Products" 
                 className="border rounded py-1 pl-8 pr-2 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

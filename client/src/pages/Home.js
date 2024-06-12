@@ -1,49 +1,62 @@
 import React from 'react';
-import image from '../images/img9.jpg';
-import Table_Ware from '../images/img3.jpg';
-import Mugs_and_Cups  from '../images/img4.jpg';
-import Decorative_Item  from '../images/img5.jpeg';
-import Burners_and_Lamps from '../images/img11.jpg';
-import Corporate_Gifts from '../images/img7.jpeg';
-import Other from '../images/img8.jpg';
-import Navbar from '../components/NavBar';
 import { Link } from 'react-router-dom';
-
+import Navbar from '../components/NavBar';
+import homeBackground from '../images/home1.jpg';
 
 const Home = () => {
-  const images = [
-    { name: 'Table ware', url: Table_Ware, category_id: 1},
-    { name: 'Mugs and Cups', url: Mugs_and_Cups, category_id: 2},
-    { name: 'Decorative Items', url: Decorative_Item , category_id: 3},
-    { name: 'Burners and Lamps', url: Burners_and_Lamps },
-    { name: 'Corporate Gifts', url: Corporate_Gifts },
-    { name: 'Other', url: Other },
-  ];
-
   return (
     <>
       <Navbar page="GLEAM CERAMIC COMPLEX" />
-      <div style={{display: 'flex', backgroundColor: '#E6F0DC', alignItems: 'flex-start'}}>
-        <div style={{width: '50%', padding: '10px', paddingLeft:'30px',paddingTop:'30PX'}}>
-          <img src={image} alt="img9" style={{width: '80%', height: '50%'}} />
-        </div>
-        <div style={{width: '50%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', padding: '10px'}}>
-        {images.map((image, index) => (
-          <div key={index} style={{width: '30%', padding: '10px',paddingTop:'30PX'}}>
-            <Link to={`/subcategory/${image.category_id}`}>
-            <img 
-              src={image.url} 
-              alt={image.name} 
-              style={index === 10 ? 
-                {height: '50%'} : 
-                {width: '100%', height: '60%'}
-              }
-                />
-                <p style={{textAlign: 'center', marginTop: '10px'}}>{image.name}</p>
-             </ Link>
-              </div>
-            ))}
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          // justifyContent: 'flex-end',
+          alignItems: 'flex-start',
+          backgroundImage: `url(${homeBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '100vh',
+          width: '100%',
+          padding: '20px',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            padding: '20px',
+            margin: '20px',
+            borderRadius: '10px',
+            width: '40%',
+            textAlign: 'left',
+          }}
+        >
+          <h1 style={{ fontSize: '28px', fontWeight: 'bold', textAlign: 'center', color: 'blue'}}>WELCOME TO GLEAM CERAMIC COMPLEX</h1>
+          <p style={{ marginTop: '20px'}}>
+            Gleam Ceramic Complex, your premier destination for exquisite ceramic products. 
+            Our website offers a wide range of handcrafted ceramics, perfect for adding a 
+            touch of elegance to any space. Whether you are looking for unique home décor pieces, 
+            beautiful tableware, or functional kitchen items, our collections showcase the artistry 
+            and quality that set us apart. Each piece is meticulously crafted by skilled artisans, 
+            ensuring that you receive products that are both beautiful and durable.
+          </p>
+          <p style={{ marginTop: '20px' }}>
+            Explore our diverse collections and find the perfect ceramics to complement your style. 
+            From modern minimalist designs to traditional and intricate patterns, we cater to a variety 
+            of tastes and preferences. Our commitment to excellence extends beyond our products; we strive 
+            to provide an exceptional shopping experience with easy navigation, detailed product descriptions,
+            and responsive customer service. Thank you for visiting Gleam Ceramic Complex, where beauty and 
+            craftsmanship meet to create timeless ceramics for your home.
+          </p>
+          <p style={{ marginTop: '20px' }}>
+            So why wait? Visit our showroom today and discover the perfect
+            ceramic products for your project. We look forward to serving you!
+          </p>
+          <Link to="/ourcollection" >
+          <button style={{ marginTop: '20px', padding: '10px 20px', fontSize: '16px', backgroundColor: '#006769', color: 'white', border: 'none', borderRadius: '15px', cursor: 'pointer' }}>
+              Shop Now
+            </button>
+          </Link>
+        </div>  
       </div>
     </>
   );

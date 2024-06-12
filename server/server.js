@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/customers', customerRoutes);
-app.use('/employees', employeeRoutes);
+app.use('/employees', employeeRoutes); // Use employee routes
 app.use('/orders', orderRoutes);
 
 const PORT = process.env.PORT || 3000;

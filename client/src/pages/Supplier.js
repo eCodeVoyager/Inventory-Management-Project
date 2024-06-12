@@ -14,6 +14,7 @@ const Supplier = () => {
 
   const totalSuppliers = suppliers.length;
   const [selectedSupplier, setSelectedSupplier] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const handleRowClick = (supplier) => {
@@ -32,6 +33,10 @@ const Supplier = () => {
       alert(`Delete Supplier ${selectedSupplier.id}`);
     }
   };
+
+  const filteredSuppliers = suppliers.filter((supplier) =>
+    supplier.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
@@ -72,6 +77,8 @@ const Supplier = () => {
                 type="text" 
                 placeholder="Search Suppliers" 
                 className="border rounded py-2 pl-10 pr-4 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -106,7 +113,7 @@ const Supplier = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {suppliers.map((supplier) => (
+                {filteredSuppliers.map((supplier) => (
                   <tr 
                     key={supplier.id}
                     className={`cursor-pointer ${selectedSupplier && selectedSupplier.id === supplier.id ? 'bg-gray-200' : ''}`}

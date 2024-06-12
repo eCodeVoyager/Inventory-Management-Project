@@ -64,7 +64,7 @@ const Sidebar = () => {
             ${activeBar === 'inventory' ? 'text-white bg-[#02824f]' : ''}`} 
             onClick={() => setActiveBar('inventory')}>
               <BuildingLibraryIcon className='h-6 w-6'/>
-              <p className='flex items-center'>Inventory</p>
+              <p className='flex items-center'>Products</p>
             </div>
           </Link>
 
@@ -94,7 +94,17 @@ const Sidebar = () => {
               <p className='flex items-center'>Supplier</p>
             </div>
           </Link>
+
+          <Link to='/employees'>
+            <div className={`flex pl-7 gap-1 hover:text-white hover:bg-[#99cc66] rounded-lg p-2 cursor-pointer 
+            ${activeBar === 'employees' ? 'text-white bg-[#02824f]' : ''}`} 
+            onClick={() => setActiveBar('employees')}>
+              <UsersIcon className='h-6 w-6'/> 
+              <p className='flex items-center'>Employees</p>
+            </div>
+          </Link>
         </div>
+            
 
         <div className="font-inter text-white w-[180px]">
           <Link to='/login'>

@@ -6,12 +6,14 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [summary, setSummary] = useState({
     totalOrders: 0,
     pendingOrders: 0,
     completedOrders: 0,
     totalCustomers: 0,
   });
+  const [searchQuery, setSearchQuery] = useState('');
 
   const calculateTotalPrice = (quantity, unitPrice) => quantity * unitPrice;
 
@@ -21,6 +23,7 @@ const Order = () => {
         const response = await fetch('http://localhost:3000/orders');
         const data = await response.json();
         setOrders(data);
+        setFilteredOrders(data); // Initialize filtered orders with all orders
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -40,6 +43,17 @@ const Order = () => {
     fetchSummary();
   }, []);
 
+  useEffect(() => {
+    // Filter orders based on searchQuery
+    const filtered = orders.filter(order =>
+      order.order_id.toString().includes(searchQuery) ||
+      order.customer_id.toString().includes(searchQuery) ||
+      order.product_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.status.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredOrders(filtered);
+  }, [searchQuery, orders]);
+
   const updateOrderStatus = async (orderId, status) => {
     try {
       await fetch(`http://localhost:3000/orders/${orderId}`, {
@@ -49,8 +63,8 @@ const Order = () => {
         },
         body: JSON.stringify({ status }),
       });
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
+      setOrders(prevOrders =>
+        prevOrders.map(order =>
           order.order_id === orderId ? { ...order, status } : order
         )
       );
@@ -58,6 +72,7 @@ const Order = () => {
       console.error('Error updating order status:', error);
     }
   };
+
 
   return (
     <div className="h-screen flex flex-col">
@@ -111,6 +126,8 @@ const Order = () => {
                 type="text"
                 placeholder="Search Order"
                 className="border rounded py-2 pl-10 pr-4 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

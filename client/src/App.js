@@ -26,6 +26,9 @@ import SingleProduct from "./subCategories/SingleProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import UpdateRawMaterials from './pages/UpdateRawmaterials';
 import UpdateSupplier from './pages/UpdateSupplier';
+import Employees from "./pages/Employees";
+import AddNewEmployee from "./pages/AddNewEmployee";
+import UpdateEmployee from "./pages/UpdateEmployees";
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SubProducts from "./subCategories/SubProducts";
@@ -38,9 +41,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/about-us" element={<AboutUs />} /> 
-        <Route path="/our-collection" element={<OurCollection />} /> 
-        <Route path="/contact-us" element={<ContactUs />} /> 
+        <Route path="/aboutus" element={<AboutUs />} /> 
+        <Route path="/ourcollection" element={<OurCollection />} /> 
+        <Route path="/contactus" element={<ContactUs />} /> 
         <Route path="/sidebar" element={<Sidebar />} /> 
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/navbardash" element={<NavBarDash />} />
@@ -61,6 +64,9 @@ function App() {
         <Route path="/updateproduct" element={<UpdateProduct />} />
         <Route path="/updaterawmaterial" element={<UpdateRawMaterials />} />
         <Route path="/updatesupplier" element={<UpdateSupplier />} />
+        <Route path="/employees" element={<Employees />} />
+        <Route path="/addnewemployee" element={<AddNewEmployee />} />
+        <Route path="/updateemployee" element={<UpdateEmployee />} />
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="*" element={<Navigate to="/home" />} />
         <Route path="/subcategory/:id" element={<SubCategory/>} />

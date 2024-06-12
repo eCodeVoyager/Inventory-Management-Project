@@ -12,8 +12,8 @@ const Customer = () => {
     // Add more customers as needed
   ];
 
-  const totalCustomers = customers.length;
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleRowClick = (customer) => {
     setSelectedCustomer(customer);
@@ -25,6 +25,10 @@ const Customer = () => {
       alert(`Delete Customer ${selectedCustomer.id}`);
     }
   };
+
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="grid grid-rows-[auto,1fr] h-screen">
@@ -50,7 +54,7 @@ const Customer = () => {
               <h2 className="text-lg font-bold mb-2">Customers</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between mb-1">
-                  <p>{totalCustomers}</p>
+                  <p>{filteredCustomers.length}</p>
                 </div>
                 <div className="flex justify-between text-gray-600 text-sm">
                   <p>All Customers</p>
@@ -65,6 +69,8 @@ const Customer = () => {
                 type="text" 
                 placeholder="Search Customers" 
                 className="border rounded py-2 pl-10 pr-4 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -91,7 +97,7 @@ const Customer = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {customers.map((customer) => (
+                {filteredCustomers.map((customer) => (
                   <tr 
                     key={customer.id}
                     className={`cursor-pointer ${selectedCustomer && selectedCustomer.id === customer.id ? 'bg-gray-200' : ''}`}
