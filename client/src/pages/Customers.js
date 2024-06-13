@@ -18,9 +18,12 @@ const Customer = () => {
   const fetchCustomer = async () => {
     try {
       console.log('Fetching customers from database...');
-      const response = await fetch('/api/customer');
+      //const response = await fetch('/api/customer');
+      const response = await fetch('http://localhost:8000/customers/all');
+  
       const data = await response.json();
       setCustomers(data);
+      
       console.log('Customers fetched from database:', data); // Log the customers to the console
     } catch (error) {
       console.error('Error fetching customers:', error);
@@ -36,7 +39,7 @@ const Customer = () => {
     if (selectedCustomer) {
       const confirm = await Swal.fire({
         title: 'Are you sure?',
-        text: `Delete Customer ${selectedCustomer.customerId}?`,
+        text: `Delete Customer ${selectedCustomer.Customer_ID}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
@@ -45,12 +48,16 @@ const Customer = () => {
 
       if (confirm.isConfirmed) {
         try {
-          console.log('Deleting customer with ID:', selectedCustomer.customerId);
-          await fetch(`/api/customer/${selectedCustomer.id}`, {
+          console.log('Deleting customer with ID:', selectedCustomer.Customer_ID);
+          const response =await fetch(`http://localhost:8000/customers/delete/${selectedCustomer.Customer_ID}`, {
             method: 'DELETE',
           });
+
+          const data = await response.json();
+
+
           Swal.fire('Deleted!', 'Customer has been deleted.', 'success');
-          console.log('Customer deleted:', selectedCustomer);
+          console.log('Customer deleted:', data);
           fetchCustomer();
           setSelectedCustomer(null);
         } catch (error) {
@@ -128,7 +135,7 @@ const Customer = () => {
                   <th className="py-2 px-4 border-b">Customer Name</th>
                   <th className="py-2 px-4 border-b">Email</th>
                   <th className="py-2 px-4 border-b">Phone No</th>
-                  <th className="py-2 px-4 border-b">Total Orders</th>
+                  {/* <th className="py-2 px-4 border-b">Total Orders</th> */}
                 </tr>
               </thead>
               <tbody className="text-center">
@@ -142,7 +149,7 @@ const Customer = () => {
                     <td className="py-2 px-4 border-b">{customer.Customer_Name}</td>
                     <td className="py-2 px-4 border-b">{customer.Email}</td>
                     <td className="py-2 px-4 border-b">{customer.Phone_No}</td>
-                    <td className="py-2 px-4 border-b">{customer.totalOrders}</td>
+                    {/* <td className="py-2 px-4 border-b">{customer.totalOrders}</td> */}
                   </tr>
                 ))}
               </tbody>

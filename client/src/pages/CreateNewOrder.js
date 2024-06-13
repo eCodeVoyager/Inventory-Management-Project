@@ -20,7 +20,7 @@ const CreateOrder = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/orders/add', {
+      const response = await fetch('http://localhost:8000/orders/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

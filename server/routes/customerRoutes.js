@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.get('/all', getAllCustomers);
 router.post('/add', addCustomer);
-router.delete('/:id', deleteCustomer);
+// router.delete('/:id', deleteCustomer);
+router.delete('/delete', deleteCustomer);
 
 export default router;
 

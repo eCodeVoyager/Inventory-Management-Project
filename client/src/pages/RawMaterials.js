@@ -12,7 +12,7 @@ const RawMaterials = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3000/rawmaterials')
+    fetch('http://localhost:8000/rawmaterials')
       .then(response => response.json())
       .then(data => setMaterials(data))
       .catch(error => console.error('Error fetching raw materials:', error));
@@ -42,7 +42,7 @@ const RawMaterials = () => {
 
   const handleDelete = () => {
     if (selectedMaterial) {
-      fetch(`http://localhost:3000/rawmaterials/${selectedMaterial.id}`, {
+      fetch(`http://localhost:8000/rawmaterials/${selectedMaterial.id}`, {
         method: 'DELETE',
       })
         .then(() => {

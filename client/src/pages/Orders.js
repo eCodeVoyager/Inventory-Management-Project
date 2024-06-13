@@ -21,7 +21,7 @@ const Order = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:3000/orders');
+        const response = await fetch('http://localhost:8000/orders');
         const data = await response.json();
         setOrders(data);
         setFilteredOrders(data); // Initialize filtered orders with all orders
@@ -32,7 +32,7 @@ const Order = () => {
 
     const fetchSummary = async () => {
       try {
-        const response = await fetch('http://localhost:3000/orders/summary');
+        const response = await fetch('http://localhost:8000/orders/summary');
         const data = await response.json();
         setSummary(data);
       } catch (error) {
@@ -57,7 +57,7 @@ const Order = () => {
 
   const updateOrderStatus = async (orderId, status) => {
     try {
-      await fetch(`http://localhost:3000/orders/${orderId}`, {
+      await fetch(`http://localhost:8000/orders/${orderId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

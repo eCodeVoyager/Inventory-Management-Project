@@ -28,7 +28,9 @@ try {
   });
 
   if (response.ok) {
-    Swal.fire('Success', 'Customer added successfully', 'success');
+    Swal.fire('Success', 'Customer added successfully', 'success').then(function() {
+      window.location = "/customers";
+  });;
     setCustomerName('');
     setAddress('');
     setPhone('');

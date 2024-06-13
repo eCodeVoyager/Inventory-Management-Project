@@ -22,7 +22,7 @@ const UpdateRawMaterialPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/rawmaterials/${materialId}`, {
+    fetch(`http://localhost:8000/rawmaterials/${materialId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ materialName, quantity, unitPrice }),
