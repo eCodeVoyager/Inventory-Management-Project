@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+// Import necessary modules and dependencies
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 const Supplier = () => {
-  const suppliers = [
-    { id: 1, name: 'Supplier One', email: 'supplier1@example.com', phone: '111-222-3333', address: '123 Street', rawmaterial: 'Material A', active: true, new: true },
-    { id: 2, name: 'Supplier Two', email: 'supplier2@example.com', phone: '222-333-4444', address: '456 Avenue', rawmaterial: 'Material B', active: true, new: false },
-    { id: 3, name: 'Supplier Three', email: 'supplier3@example.com', phone: '333-444-5555', address: '789 Boulevard', rawmaterial: 'Material C', active: false, new: false },
-    // Add more suppliers as needed
-  ];
-
-  const totalSuppliers = suppliers.length;
+  const [suppliers, setSuppliers] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch all suppliers from backend upon component mount
+    const fetchSuppliers = async () => {
+      try {
+        const response = await axios.get('/api/suppliers');
+        setSuppliers(response.data);
+      } catch (error) {
+        console.error('Error fetching suppliers:', error);
+      }
+    };
+
+    fetchSuppliers();
+  }, []);
 
   const handleRowClick = (supplier) => {
     setSelectedSupplier(supplier);
@@ -27,15 +36,23 @@ const Supplier = () => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (selectedSupplier) {
-      // Logic for deleting supplier
-      alert(`Delete Supplier ${selectedSupplier.id}`);
+      try {
+        await axios.delete(`/api/suppliers/${selectedSupplier.id}`);
+        alert(`Supplier ${selectedSupplier.id} deleted successfully`);
+        setSelectedSupplier(null);
+        // Refresh supplier list after deletion
+        const response = await axios.get('/api/suppliers');
+        setSuppliers(response.data);
+      } catch (error) {
+        console.error('Error deleting supplier:', error);
+      }
     }
   };
 
   const filteredSuppliers = suppliers.filter((supplier) =>
-    supplier.name.toLowerCase().includes(searchQuery.toLowerCase())
+    supplier.supplierName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -62,7 +79,7 @@ const Supplier = () => {
               <h2 className="text-lg font-bold mb-2">Suppliers</h2>
               <div className="flex flex-col">
                 <div className="flex justify-between mb-1">
-                  <p>{totalSuppliers}</p>
+                  <p>{suppliers.length}</p>
                 </div>
                 <div className="flex justify-between text-gray-600 text-sm">
                   <p>All Suppliers</p>
@@ -120,9 +137,9 @@ const Supplier = () => {
                     onClick={() => handleRowClick(supplier)}
                   >
                     <td className="py-2 px-4 border-b">{supplier.id}</td>
-                    <td className="py-2 px-4 border-b">{supplier.name}</td>
+                    <td className="py-2 px-4 border-b">{supplier.supplierName}</td>
                     <td className="py-2 px-4 border-b">{supplier.phone}</td>
-                    <td className="py-2 px-4 border-b">{supplier.rawmaterial}</td>
+                    <td className="py-2 px-4 border-b">{supplier.rawMaterial}</td>
                   </tr>
                 ))}
               </tbody>

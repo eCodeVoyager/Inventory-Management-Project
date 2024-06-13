@@ -29,6 +29,9 @@ import UpdateSupplier from './pages/UpdateSupplier';
 import Employees from "./pages/Employees";
 import AddNewEmployee from "./pages/AddNewEmployee";
 import UpdateEmployee from "./pages/UpdateEmployees";
+import MyOrders from "./pages/MyOrders";
+import CustomerProfile from "./pages/CustomerProfile";
+import CustomerProfileSetting from "./pages/CustomerProfileSetting";
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SubProducts from "./subCategories/SubProducts";
@@ -72,6 +75,9 @@ function App() {
         <Route path="/subcategory/:id" element={<SubCategory/>} />
         <Route path="/products/:id" element={<SubProducts/>} />
         <Route path= "/singleproduct" element={<SingleProduct/>}/>
+        <Route path= "/myorders" element={<MyOrders/>}/>
+        <Route path= "/customerprofile" element={<CustomerProfile/>}/>
+        <Route path= "/customerprofilesetting" element={<CustomerProfileSetting/>}/>
       </Routes>
     </Router>
   );

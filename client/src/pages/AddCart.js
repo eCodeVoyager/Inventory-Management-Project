@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from '../components/NavBar';
 
 const CartItem = () => {
     const [quantity, setQuantity] = useState(1);
@@ -15,6 +16,8 @@ const CartItem = () => {
     };
 
     return (
+        <>
+        <Navbar/>
         <div className="container mx-auto p-4 bg-white shadow-lg mt-10">
             <h1 className="text-2xl font-bold text-center mb-6">My Shopping Cart </h1>
             <table className="table-auto w-full mb-6">
@@ -73,6 +76,7 @@ const CartItem = () => {
             <button className="px-4 py-2 bg-black text-white">Back To Shop</button>
             <button className="px-4 py-2 bg-green-500 text-white float-right">Place Orders</button>
         </div>
+        </>
     );
 };
 

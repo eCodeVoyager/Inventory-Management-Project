@@ -6,25 +6,29 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Swal from 'sweetalert2';
 
 const Customer = () => {
-  const [customers, setCustomers] = useState([]);
+  const [customer, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  
 
   useEffect(() => {
-    fetchCustomers();
+    fetchCustomer();
   }, []);
 
-  const fetchCustomers = async () => {
+  const fetchCustomer = async () => {
     try {
-      const response = await fetch('/api/customers');
+      console.log('Fetching customers from database...');
+      const response = await fetch('/api/customer');
       const data = await response.json();
       setCustomers(data);
+      console.log('Customers fetched from database:', data); // Log the customers to the console
     } catch (error) {
       console.error('Error fetching customers:', error);
     }
   };
 
   const handleRowClick = (customer) => {
+    console.log('Customer selected:', customer);
     setSelectedCustomer(customer);
   };
 
@@ -32,7 +36,7 @@ const Customer = () => {
     if (selectedCustomer) {
       const confirm = await Swal.fire({
         title: 'Are you sure?',
-        text: `Delete Customer ${selectedCustomer.id}?`,
+        text: `Delete Customer ${selectedCustomer.customerId}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
@@ -41,11 +45,13 @@ const Customer = () => {
 
       if (confirm.isConfirmed) {
         try {
-          await fetch(`/api/customers/${selectedCustomer.id}`, {
+          console.log('Deleting customer with ID:', selectedCustomer.customerId);
+          await fetch(`/api/customer/${selectedCustomer.id}`, {
             method: 'DELETE',
           });
           Swal.fire('Deleted!', 'Customer has been deleted.', 'success');
-          fetchCustomers();
+          console.log('Customer deleted:', selectedCustomer);
+          fetchCustomer();
           setSelectedCustomer(null);
         } catch (error) {
           console.error('Error deleting customer:', error);
@@ -55,8 +61,8 @@ const Customer = () => {
     }
   };
 
-  const filteredCustomers = customers.filter((customer) =>
-    customer.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCustomers = customer.filter((customer) =>
+    customer.Customer_Name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -132,10 +138,10 @@ const Customer = () => {
                     className={`cursor-pointer ${selectedCustomer && selectedCustomer.id === customer.id ? 'bg-gray-200' : ''}`}
                     onClick={() => handleRowClick(customer)}
                   >
-                    <td className="py-2 px-4 border-b">{customer.customerId}</td>
-                    <td className="py-2 px-4 border-b">{customer.customerName}</td>
-                    <td className="py-2 px-4 border-b">{customer.email}</td>
-                    <td className="py-2 px-4 border-b">{customer.phone}</td>
+                    <td className="py-2 px-4 border-b">{customer.Customer_ID}</td>
+                    <td className="py-2 px-4 border-b">{customer.Customer_Name}</td>
+                    <td className="py-2 px-4 border-b">{customer.Email}</td>
+                    <td className="py-2 px-4 border-b">{customer.Phone_No}</td>
                     <td className="py-2 px-4 border-b">{customer.totalOrders}</td>
                   </tr>
                 ))}

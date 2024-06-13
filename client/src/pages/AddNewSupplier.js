@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const AddSupplierPage = () => {
   const [supplierId, setSupplierId] = useState('');
@@ -9,18 +10,39 @@ const AddSupplierPage = () => {
   const [rawMaterial, setRawMaterial] = useState('');
   const [rawMaterialId, setRawMaterialId] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can add the logic to submit the supplier data
-    console.log('Supplier submitted:', { supplierId, supplierName, address, phone, email, rawMaterial, rawMaterialId });
-    // Reset form fields after submission
-    setSupplierId('');
-    setSupplierName('');
-    setAddress('');
-    setPhone('');
-    setEmail('');
-    setRawMaterial('');
-    setRawMaterialId('');
+
+    if (!supplierId || !supplierName || !address || !phone || !email || !rawMaterial || !rawMaterialId) {
+      Swal.fire('All fields are required');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/suppliers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ supplierId, supplierName, address, phone, email, rawMaterial, rawMaterialId }),
+      });
+
+      if (response.ok) {
+        Swal.fire('Success', 'Supplier added successfully', 'success');
+        setSupplierId('');
+        setSupplierName('');
+        setAddress('');
+        setPhone('');
+        setEmail('');
+        setRawMaterial('');
+        setRawMaterialId('');
+      } else {
+        throw new Error('Failed to add supplier');
+      }
+    } catch (error) {
+      console.error('Error adding supplier:', error);
+      Swal.fire('Error', 'Error adding supplier', 'error');
+    }
   };
 
   return (
@@ -37,8 +59,20 @@ const AddSupplierPage = () => {
             <input type="text" id="supplierName" value={supplierName} onChange={(e) => setSupplierName(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
           </div>
           <div className="mb-4">
+            <label htmlFor="address" className="block mb-1">Address</label>
+            <input type="text" id="address" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+          </div>
+          <div className="mb-4">
             <label htmlFor="phone" className="block mb-1">Phone No</label>
             <input type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-1">Email</label>
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="rawMaterial" className="block mb-1">Raw Material</label>
+            <input type="text" id="rawMaterial" value={rawMaterial} onChange={(e) => setRawMaterial(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2" />
           </div>
           <div className="mb-4">
             <label htmlFor="rawMaterialId" className="block mb-1">Raw Material ID</label>

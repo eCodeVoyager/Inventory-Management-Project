@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const AddEmployeePage = () => {
   const [employeeId, setEmployeeId] = useState('');
@@ -13,6 +14,8 @@ const AddEmployeePage = () => {
     e.preventDefault();
     // Logic to submit new employee data
     console.log('New Employee submitted:', { employeeId, employeeName, email, address, phone, image, password });
+    // Show success message after submission
+    Swal.fire("Employee added successfully!");
     // Reset form fields after submission
     setEmployeeId('');
     setEmployeeName('');

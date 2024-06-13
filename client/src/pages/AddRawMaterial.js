@@ -9,19 +9,24 @@ const AddRawMaterialPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch('http://localhost:3000/rawmaterials', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ materialId, materialName, quantity, unitPrice }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        alert('Raw material added successfully');
-        setMaterialId('');
-        setMaterialName('');
-        setQuantity('');
-        setUnitPrice('');
-      })
-      .catch(error => console.error('Error adding raw material:', error));
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ materialId, materialName, quantity, unitPrice }),
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+})
+.then(data => {
+  alert('Raw material added successfully');
+  setMaterialId('');
+  setMaterialName('');
+  setQuantity('');
+  setUnitPrice('');
+})
+.catch(error => console.error('Error adding raw material:', error));
   };
 
   return (

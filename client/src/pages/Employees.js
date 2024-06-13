@@ -1,10 +1,13 @@
+// Import necessary modules and dependencies
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import NavBarDash from '../components/NavBarDash';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import Swal from 'sweetalert2';
 
 const Employee = () => {
+  // Sample data for demonstration
   const employees = [
     { id: 1, name: 'Employee One', email: 'employee1@example.com', phone: '111-222-3333', address: 'Address One', department: 'Department A', active: true, new: true },
     { id: 2, name: 'Employee Two', email: 'employee2@example.com', phone: '222-333-4444', address: 'Address Two', department: 'Department B', active: true, new: false },
@@ -28,8 +31,13 @@ const Employee = () => {
 
   const handleDelete = () => {
     if (selectedEmployee) {
-      // Logic for deleting employee
-      alert(`Delete Employee ${selectedEmployee.id}`);
+      // Show confirmation message before deletion
+      if (window.confirm('Are you sure you want to delete this employee?')) {
+        // Logic for deleting employee
+        alert(`Deleting Employee ${selectedEmployee.id}`);
+        // Show success message after deletion
+        Swal.fire("SweetAlert2 is working!");
+      }
     }
   };
 

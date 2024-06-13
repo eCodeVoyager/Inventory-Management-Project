@@ -10,13 +10,24 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
 });
 
-export default pool;
+export const testConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        await connection.query('SELECT 1');
+        console.log('Database connection successful');
+        connection.release();
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
+};
 
 export const executeQuery = async (query, values) => {
     try {
-      const [rows] = await connection.execute(query, values);
-      return rows;
+        const [rows] = await pool.execute(query, values);
+        return rows;
     } catch (error) {
-      throw new Error('Error executing query');
+        throw new Error('Error executing query');
     }
-  };
+};
+
+export default pool;

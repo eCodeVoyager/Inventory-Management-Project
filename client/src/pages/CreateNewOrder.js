@@ -28,6 +28,7 @@ const CreateOrder = () => {
         body: JSON.stringify(newOrder),
       });
 
+
       if (response.ok) {
         Swal.fire('Order created successfully!', '', 'success');
         setCustomerId('');

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateEmployeePage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ const UpdateEmployeePage = () => {
     e.preventDefault();
     // Logic to update employee data
     console.log('Employee updated:', { employeeId, employeeName, email, phone, address });
+    // Show message
+    Swal.fire("Employee updated successfully!");
     navigate('/employees');
   };
 
